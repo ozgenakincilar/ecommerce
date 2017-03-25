@@ -1,0 +1,41 @@
+﻿@using NS.Web.Areas.Administration.Models.Categories
+@model CategoryViewModel
+
+@{
+    ViewBag.Title = "Yeni Kategori Ekle";
+}
+
+<h2>Yeni Kategori</h2>
+
+@if (Model != null)
+{
+    using (Html.BeginForm("Create", "ManageCategories", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="categoryName">
+                @Html.DisplayNameFor(x => x.CategoryName) :
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.TextBoxFor(x => x.CategoryName) 
+                </p>
+            </div>
+            <label class="control-label col-sm-2" for="description">@Html.DisplayNameFor(x => x.Description) :</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.EditorFor(x => x.Description) 
+                </p>
+            </div>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.ValidationSummary()
+                </p>
+            </div>
+            <div class="col-sm-10"> 
+                <input type="submit" value="Kaydet" class="btn btn-danger" />
+            </div>
+        </div>
+    }
+} 

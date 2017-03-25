@@ -1,0 +1,53 @@
+﻿@using NS.Web.Models.Products;
+@using System.Collections.Generic
+@using NS.Infrastructure.Extensions
+@model IEnumerable<ProductViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div id="hot">
+        <div class="box">
+            <div class="container">
+                <div class="col-md-12">
+                    <h2>Hot this week</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="product-slider">
+                @foreach (var product in Model)
+                {
+                    <div class="item">
+                        <div class="product">
+                            <div class="flip-container">
+                                <div class="flipper">
+                                    <div class="front">
+                                        <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)">
+                                            <img src="@product.ImageUrl" alt="" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="back">
+                                        <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)">
+                                            <img src="@product.ImageUrl" alt="" class="img-responsive">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)" class="invisible">
+                                <img src="@product.ImageUrl" alt="" class="img-responsive">
+                            </a>
+                            <div class="text">
+                                <h3>
+                                    <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)">
+                                        @product.ProductName
+                                    </a>
+                                </h3>
+                                <p class="price">@string.Format("{0:C}", product.UnitPrice)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

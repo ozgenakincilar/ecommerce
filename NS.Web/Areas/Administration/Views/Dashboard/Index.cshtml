@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    @Html.Action("CategoriesCount", "Dashboard")
+    @Html.Action("ProductsCount", "Dashboard")
+    @Html.Action("SuppliersCount", "Dashboard")
+</div>

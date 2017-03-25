@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Northwind Store</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Obaju e-commerce template">
+    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
+    <meta name="keywords" content="">
+    <meta name="keywords" content="">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+    <!-- styles -->
+    <link href="@Url.Content("~/Content/css/font-awesome.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/bootstrap.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/animate.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/owl.carousel.css")" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/owl.theme.css")" rel="stylesheet">
+    <!-- theme stylesheet -->
+    <link href="@Url.Content("~/Content/css/style.default.css")" rel="stylesheet" id="theme-stylesheet">
+    <!-- your stylesheet with modifications -->
+    <link href="@Url.Content("~/Content/css/custom.css")" rel="stylesheet">
+    <script src="@Url.Content("~/Content/js/respond.min.js")"></script>
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" />
+    <link rel="shortcut icon" href="@Url.Content("~/Content/favicon.png")">
+</head>
+<body>
+    @Html.Action("RegistrationHeaderTop", "Layout")
+    @Html.Action("TopNavigationBar", "Layout")
+    <div id="all">
+        <div id="content">
+            <div class="container">
+                <div class="col-md-12">
+                    @if (!string.IsNullOrEmpty(ViewBag.Title))
+                    {
+                        <ul class="breadcrumb">
+                            <li>
+                                @ViewBag.Title - Northwind Store
+                            </li>
+                        </ul>
+                    }
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+        @Html.Action("Footer", "Layout")
+        @Html.Action("Copyright", "Layout")
+    </div> 
+    <script src="@Url.Content("~/Scripts/jquery-1.12.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.js")"></script> 
+    <script src="@Url.Content("~/Content/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/jquery.cookie.js")"></script>
+    <script src="@Url.Content("~/Content/js/waypoints.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/modernizr.js")"></script>
+    <script src="@Url.Content("~/Content/js/bootstrap-hover-dropdown.js")"></script>
+    <script src="@Url.Content("~/Content/js/owl.carousel.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/front.js")"></script>
+    @RenderSection("InternalScripts", false)
+</body>
+</html>

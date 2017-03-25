@@ -1,0 +1,47 @@
+﻿@using System.Collections.Generic
+@using NS.Web.Models.Products
+@using NS.Infrastructure.Extensions
+@model IEnumerable<ProductViewModel>
+
+
+@if (Model != null && Model.Any())
+{
+    <div class="row same-height-row">
+        <div class="col-md-3 col-sm-6">
+            <div class="box same-height">
+                <h3>You may also like these products</h3>
+            </div>
+        </div>
+
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="product same-height">
+                    <div class="flip-container">
+                        <div class="flipper">
+                            <div class="front">
+                                <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)">
+                                    <img src="@product.ImageUrl" alt="" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="back">
+                                <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)">
+                                    <img src="@product.ImageUrl" alt="" class="img-responsive">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@string.Format("/Products/Detail/{0}/{1}",product.ProductName.ToUrlSlug(),product.ProductID)" class="invisible">
+                        <img src="@product.ImageUrl" alt="" class="img-responsive">
+                    </a>
+                    <div class="text">
+                        <h3>@product.ProductName  </h3>
+                        <p class="price">@string.Format("{0:C}", product.UnitPrice)</p>
+                    </div>
+                </div>
+                <!-- /.product -->
+            </div>
+        }
+
+    </div>
+}

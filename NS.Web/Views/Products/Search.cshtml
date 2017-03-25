@@ -1,0 +1,221 @@
+﻿@using NS.Web.Models.Products
+@using NS.Infrastructure.Extensions
+@model ProductSearchViewModel
+
+@if (Model != null)
+{
+    <div id="content">
+        @using (Html.BeginForm("Search", "Products", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+
+                @if (Model.ProductSearchCriteria != null)
+                {
+                    <div class="col-md-3">
+                        <!-- *** MENUS AND FILTERS ***
+                        _________________________________________________________ -->
+
+                        <div class="panel panel-default sidebar-menu">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title">@Html.LabelFor(x => x.ProductSearchCriteria.SearchTerm)</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.ProductSearchCriteria.SearchTerm)
+                                </div>
+
+                                <input type="submit" class="btn btn-default btn-sm btn-primary fa fa-pencil" value="Apply">
+
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default sidebar-menu">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Filtering</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked category-menu">
+                                    <li class="active">
+                                        <span>General Filters</span>
+                                        <ul>
+                                            <li>
+                                                @Html.CheckBoxFor(x => x.ProductSearchCriteria.IsContinued)
+                                                @Html.LabelFor(x => x.ProductSearchCriteria.IsContinued)
+                                            </li>
+                                            <li>
+                                                @Html.CheckBoxFor(x => x.ProductSearchCriteria.IsInStock)
+                                                @Html.LabelFor(x => x.ProductSearchCriteria.IsInStock)
+                                            </li>
+                                            <li>
+                                                @Html.LabelFor(x => x.ProductSearchCriteria.MaxUnitPrice)
+                                                @Html.TextBoxFor(x => x.ProductSearchCriteria.MaxUnitPrice)
+                                            </li>
+                                            <li>
+                                                @Html.LabelFor(x => x.ProductSearchCriteria.MinUnitPrice)
+                                                @Html.TextBoxFor(x => x.ProductSearchCriteria.MinUnitPrice)
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <input type="submit" class="btn btn-default btn-sm btn-primary fa fa-pencil" value="Apply">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default sidebar-menu">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    @Html.LabelFor(x => x.ProductSearchCriteria.SelectedCategories)
+                                    <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a>
+                                </h3>
+                            </div>
+
+                            <div class="panel-body">
+                                @foreach (var item in Model.ProductSearchCriteria.Categories)
+                                {
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   id="@Html.NameFor(x=>x.ProductSearchCriteria.SelectedCategories)"
+                                                   name="@Html.NameFor(x=>x.ProductSearchCriteria.SelectedCategories)"
+                                                   value="@item.Value" @(item.Selected ? "checked" : string.Empty)> @item.Text
+                                            </label>
+                                        </div>
+                                }
+                                <input type="submit" class="btn btn-default btn-sm btn-primary fa fa-pencil" value="Apply">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default sidebar-menu">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    @Html.LabelFor(x => x.ProductSearchCriteria.SelectedSuppliers)
+                                    <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a>
+                                </h3>
+                            </div>
+
+                            <div class="panel-body">
+                                @foreach (var item in Model.ProductSearchCriteria.Suppliers)
+                                {
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   id="@Html.NameFor(x=>x.ProductSearchCriteria.SelectedSuppliers)"
+                                                   name="@Html.NameFor(x=>x.ProductSearchCriteria.SelectedSuppliers)"
+                                                   value="@item.Value" @(item.Selected ? "checked" : string.Empty)> @item.Text
+                                            </label>
+                                        </div>
+                                }
+                                <input type="submit" class="btn btn-default btn-sm btn-primary fa fa-pencil" value="Apply">
+                            </div>
+                        </div>
+
+                        <!-- *** MENUS AND FILTERS END *** -->
+
+                        <div class="banner">
+                            <a href="#">
+                                <img src="@Url.Content("~/Content/img/banner.jpg")" alt="sales 2014" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <div class="col-md-9">
+                    <div class="row products">
+                        @if (Model.Products != null && Model.Products.Any())
+                        {
+                            foreach (var item in Model.Products)
+                            {
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="product">
+                                        <div class="flip-container">
+                                            <div class="flipper">
+                                                <div class="front">
+                                                    <a href="detail.html">
+                                                        <img src="@item.ImageUrl" alt="" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                                <div class="back">
+                                                    <a href="detail.html">
+                                                        <img src="@item.ImageUrl" alt="" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="detail.html" class="invisible">
+                                            <img src="@item.ImageUrl" alt="" class="img-responsive">
+                                        </a>
+                                        <div class="text">
+                                            <h3>
+                                                <a href="detail.html">@item.ProductName</a>
+                                            </h3>
+                                            <p class="price">@string.Format("{0:C}", item.UnitPrice)</p>
+                                            <p class="buttons">
+                                                <a href="@string.Format("/Products/Detail/{0}/{1}",item.ProductName.ToUrlSlug(),item.ProductID)"
+                                                   class="btn btn-default">
+                                                    View Detail
+                                                </a>
+
+
+
+                                                <a href="@Url.Action("AddToCart", "Products", new { productId = item.ProductID })" class="btn btn-primary">
+                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    @if (Model.CurrentPageIndex.HasValue)
+                    {
+                        <div class="pages">
+
+                            <ul class="pagination">
+                                @for (int i = 1; i <= Model.TotalPageCount; i++)
+                                {
+                                    <li class="@(Model.CurrentPageIndex.Value==i?"active":string.Empty)">
+                                        <a href="#">@i.ToString()</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                </div>
+                <!-- /.col-md-9 -->
+            </div>
+        <!-- /.container -->
+
+        }
+    </div>
+}
+
+@section InternalScripts{
+    <script>
+        $(document).ready(function () {
+            $("#ProductSearchCriteria_MinUnitPrice").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                    return false;
+                }
+            });
+
+            $("#ProductSearchCriteria_MaxUnitPrice").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                    return false;
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,19 @@
+﻿@using NS.Web.Models.Home;
+@using System.Collections.Generic
+@model IEnumerable<AdvertisementViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="col-md-12">
+        <div id="main-slider">
+            @foreach (var item in Model)
+            {
+                <div class="item">
+                    <h3>@item.Title</h3>
+                    <img src="@Url.Content(item.ImageUrl)" alt="" class="img-responsive">
+                </div>
+            }
+        </div>
+        <!-- /#main-slider -->
+    </div>
+}

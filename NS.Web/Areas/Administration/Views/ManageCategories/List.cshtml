@@ -1,0 +1,50 @@
+﻿@using NS.Web.Areas.Administration.Models.Categories
+@using System.Collections.Generic;
+@using NS.Infrastructure.Extensions
+@model IEnumerable<CategoryViewModel>
+
+@{
+    ViewBag.Title = "Kategoriler";
+}
+
+<h2>Kategoriler</h2>
+
+@if (Model != null && Model.Any())
+{
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Adı</th>
+                <th>Açıklaması</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.CategoryID</td>
+                    <td>@category.CategoryName</td>
+                    <td>@category.Description.RemoveHtml().ShortenText(20)</td>
+                    <td>
+                        @Html.ActionLink("Detaya Git", "Detail", "ManageCategories", new { id = category.CategoryID }, new { @class = "btn btn-info", type = "button" })
+                        @Html.ActionLink("Sil", "Delete", "ManageCategories", new { id = category.CategoryID }, new { @class = "btn btn-danger", type = "button" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    @Html.ActionLink("Yeni", "Create", "ManageCategories", new { @class = "btn btn-primary", type = "button" })
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+
+
+
+

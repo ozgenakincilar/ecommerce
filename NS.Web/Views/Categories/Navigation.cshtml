@@ -1,0 +1,20 @@
+﻿@using System.Collections.Generic
+@using NS.Infrastructure.Extensions
+@using NS.Web.Models.Categories
+@model IEnumerable<CategoryViewModel>
+@if (Model != null && Model.Any())
+{
+    <div class="col-sm-3">
+        <h5>Categories</h5>
+        <ul>
+            @foreach (var category in Model)
+            {
+                <li>
+                    <a href="@string.Format("/Products/Search/{0}/{1}",category.CategoryName.ToUrlSlug(),category.CategoryID)">
+                        @category.CategoryName
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}

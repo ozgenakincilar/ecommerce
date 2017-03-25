@@ -1,0 +1,6 @@
+﻿@using NS.Web.Models.Cart
+@model CartTotalItemCountViewModel
+<i class="fa fa-shopping-cart"></i>
+<span class="hidden-sm">
+    @(string.Format("Sepette {0} ürün", Model.TotalItemCount))
+</span>

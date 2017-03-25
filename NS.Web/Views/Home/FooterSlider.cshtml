@@ -1,0 +1,23 @@
+﻿@using NS.Web.Models.Home;
+@using System.Collections.Generic
+@model IEnumerable<CollectionViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="col-md-12">
+        <div class="box slideshow">
+            <h3>Get Inspired</h3>
+            <p class="lead">Get the inspiration from our world class designers</p>
+            <div id="get-inspired" class="owl-carousel owl-theme">
+                @foreach (var item in Model)
+                {
+                    <div class="item">
+                        <a href="#">
+                            <img src="@Url.Content(item.ImageUrl)" alt="Get inspired" class="img-responsive">
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

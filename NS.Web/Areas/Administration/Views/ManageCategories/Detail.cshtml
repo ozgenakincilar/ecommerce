@@ -1,0 +1,75 @@
+﻿@using NS.Web.Areas.Administration.Models.Categories
+@model CategoryViewModel
+
+@{
+    ViewBag.Title = string.Format("{0} Detay Bilgileri", Model.CategoryName);
+}
+
+<h2>@string.Format("{0} Detay Bilgileri", Model.CategoryName)</h2>
+
+@if (Model != null)
+{
+    using (Html.BeginForm("Detail", "ManageCategories", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x=>x.CategoryID)
+
+        <div class="form-group" id="category-detail-view">
+            <label class="control-label col-sm-2" for="categoryName">@Html.DisplayNameFor(x => x.CategoryName) :</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">@Model.CategoryName</p>
+            </div>
+            <label class="control-label col-sm-2" for="description">@Html.DisplayNameFor(x => x.Description) :</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.Raw(Model.Description)
+                </p>
+            </div>
+            <div class="col-sm-10">
+                <a onclick="showUpdateView()" class="btn btn-primary">Güncelle</a>
+            </div>
+        </div>
+        <div class="form-group" id="category-detail-update-view" style="display:none;">
+            <label class="control-label col-sm-2" for="categoryName">
+                @Html.DisplayNameFor(x => x.CategoryName) :
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.TextBoxFor(x => x.CategoryName) 
+                </p>
+            </div>
+            <label class="control-label col-sm-2" for="description">@Html.DisplayNameFor(x => x.Description) :</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.EditorFor(x => x.Description) 
+                </p>
+            </div>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.ValidationSummary()
+                </p>
+            </div>
+            <div class="col-sm-10">
+                <a onclick="showView()" class="btn btn-primary">İptal</a>
+                <input type="submit" value="Kaydet" class="btn btn-danger" />
+            </div>
+        </div>
+    }
+}
+
+
+@section InternalScripts{
+    <script>
+        function showUpdateView() {
+            $("#category-detail-update-view").show();
+            $("#category-detail-view").hide();
+        }
+
+        function showView() {
+            $("#category-detail-view").show();
+            $("#category-detail-update-view").hide();
+        }
+    </script>
+}
+

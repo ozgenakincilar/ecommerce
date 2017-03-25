@@ -1,0 +1,90 @@
+﻿@using System.Collections.Generic
+@using NS.Web.Models.Cart
+@using NS.Infrastructure.Extensions
+@model IEnumerable<CartItemViewModel>
+@{
+    ViewBag.Title = "Sepetiniz!";
+}
+@if (Model != null && Model.Any())
+{
+    <div id="content">
+        <div class="container">
+            <div class="col-md-9" id="basket">
+                <div class="box">
+                    <h1>Sepetiniz!</h1>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit price</th>
+                                    <th colspan="2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    using (Html.BeginForm("UpdateCartItem", "Cart", FormMethod.Post, new { id = "cartItemForm" + item.ProductId }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    @Html.Hidden("ProductId", item.ProductId)
+                                                    <img src="@item.PhotoUrl" alt="@item.ProductName">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Detail","Products", new {id=item.ProductId, productName=item.ProductName.ToUrlSlug() })">
+                                                    @item.ProductName
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @Html.TextBox("Quantity", item.Quantity)
+                                            </td>
+                                            <td>@string.Format("{0:C}", item.UnitPrice)</td>
+                                            <td>@string.Format("{0:C}", item.UnitPrice * item.Quantity)</td>
+                                            <td>
+                                                <a href="@Url.Action("DeleteFromCart", "Cart", new { productId = item.ProductId })"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" onclick="document.getElementById('@string.Format("cartItemForm"+item.ProductId)').submit()">
+                                                    <i class="fa fa-stack-overflow"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Total</th>
+                                    <th colspan="2">@string.Format("{0:C}", Model.Sum(x => x.UnitPrice * x.Quantity))</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.table-responsive -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a href="@Url.Action("Search","Products")" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">
+                                Proceed to checkout <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div> 
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col-md-9 -->
+        </div>
+        <!-- /.container -->
+    </div>
+}
+else
+{
+    <p>Sepetiniz boş!</p>
+}
